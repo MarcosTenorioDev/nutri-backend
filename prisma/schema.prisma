@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgres://fueuosmz:oE2a8ogZfBqm3Lwv9bnDqdDjTKM9J9j4@babar.db.elephantsql.com/fueuosmz"
+}
+
+model User{
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  diets Diets[]
+
+  @@map("users")
+}
+
+model Diets{
+  id String @id @default(uuid())
+  name String
+  dietData String
+  userId String
+  user User @relation(fields: [userId], references: [id])
+
+@@map("diets")
+}
