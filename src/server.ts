@@ -1,6 +1,7 @@
 import fastify, { FastifyInstance } from "fastify";
 import {userRoutes} from './routes/user.routes'
 import { dietRoutes } from './routes/diet.routes'
+
 const app: FastifyInstance = fastify();
  
 app.register(userRoutes, {

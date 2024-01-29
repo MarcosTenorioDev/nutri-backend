@@ -4,7 +4,7 @@ import { prisma } from '../database/prisma-client';
 
 class DietRepositoryPrisma implements DietRepository {
     async create(data: DietCreate): Promise<any> {
-        const OPENAI_API_KEY = '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'; 
+        const OPENAI_API_KEY = process.env.OPENAI_API_KEY
         const content = data.prompt;
 
         const config = {

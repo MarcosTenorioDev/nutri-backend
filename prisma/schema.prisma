@@ -11,11 +11,12 @@ datasource db {
 }
 
 model User{
-  id String @id @default(uuid())
+  id String @id
   name String
   email String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  isPaid Boolean @default(false)
   diets Diets[]
 
   @@map("users")

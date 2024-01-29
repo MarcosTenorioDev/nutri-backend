@@ -18,5 +18,5 @@ export interface DietCreateRepository{
 }
 
 export interface DietRepository{
- create(data: DietCreate) : Promise<string> /* tipar futuramente */
+ create(data: DietCreate) : Promise<string>
 }
