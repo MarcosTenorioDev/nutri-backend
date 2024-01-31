@@ -61,6 +61,9 @@ export async function userRoutes(fastify : FastifyInstance){
     const { id , external_accounts, first_name  } = evt.data;
     const { type, data } = evt;
 
+    //TODO:
+    //Criar função para gerenciar as respostas do webhook
+
     switch (type) {
       case 'user.deleted':
         try{
@@ -85,29 +88,33 @@ export async function userRoutes(fastify : FastifyInstance){
         }
         break;
 
-      /* case 'user.updated':
+      case 'user.updated':
         console.log('Usuário editado');
         console.log('Webhook body:', data);
         break;
   
       case 'session.ended':
         console.log('Sessão encerrada');
+        console.log('Webhook body:', data);
         break;
   
       case 'session.created':
         console.log('Sessão criada');
+        console.log('Webhook body:', data);
         break;
   
       case 'session.revoked':
         console.log('Sessão revogada');
+        console.log('Webhook body:', data);
         break;
   
       case 'session.removed':
         console.log('Sessão removida');
+        console.log('Webhook body:', data);
         break;
   
       default:
-        console.log(`Evento não tratado: ${type}`); */
+        console.log(`Evento não tratado: ${type}`);
     }
  
     return reply.status(200).send({

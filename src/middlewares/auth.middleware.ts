@@ -1,9 +1,40 @@
-export async function authMiddleware(req : any, reply: any){
-    const apiEmail = req.headers['email'];
+import jwt from 'jsonwebtoken';
+import jwksClient from 'jwks-rsa';
 
-    if(!apiEmail) {
-        reply.status(401).send({
-            message: 'Email is missing on headers'
+export async function jwtValidator (req: any, reply: any) {
+    try {
+
+        const token = req.headers['authorization'];
+        const jwtUri = process.env.JWT_PUBLIC_KEY!;
+
+
+        const jwksClientInstance = jwksClient({
+          jwksUri: jwtUri,
         })
-    }
+        
+        const getKey = (header: any, callback: any) => {
+          jwksClientInstance.getSigningKey(header.kid, (err, key: any) => {
+            if (err) {
+              console.error('Error getting signing key:', err);
+              callback(err);
+            }
+            const signingKey = key.getPublicKey();
+            callback(null, signingKey);
+          });
+        };    
+  
+        const decodedToken = await new Promise((resolve, reject) => {
+          jwt.verify(token, getKey, { algorithms: ['RS256'] }, (err, decoded) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(decoded);
+            }
+          });
+        });
+  
+      } catch (error: any) {
+        console.error('JWT Verification Error:', error.message);
+        throw new Error('Invalid Token');
+      }
 }

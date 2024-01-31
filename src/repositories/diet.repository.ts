@@ -6,7 +6,7 @@ class DietRepositoryPrisma implements DietRepository {
     async create(data: DietCreate): Promise<any> {
         const OPENAI_API_KEY = process.env.OPENAI_API_KEY
         const content = data.prompt;
-
+   //TOFIX: RETIRAR EMAIL DO HEADER
         const config = {
             headers: {
                 Authorization: "Bearer " + OPENAI_API_KEY,
@@ -16,7 +16,6 @@ class DietRepositoryPrisma implements DietRepository {
                 
             },
         };
-
         const chatData = {
             model: "gpt-3.5-turbo",
             messages: [

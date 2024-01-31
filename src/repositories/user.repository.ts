@@ -1,3 +1,4 @@
+import { error } from "console";
 import { prisma } from "../database/prisma-client";
 import { User, UserCreate, UserRepository } from "../interfaces/user.interface";
 
@@ -23,15 +24,20 @@ class UserRepositoryPrisma implements UserRepository {
   }
 
   async findByEmail(email: string): Promise<User | null>{
-    const result = await prisma.user.findFirst({
+    if(email){
+         const result = await prisma.user.findFirst({
         where: {
             email
         }
     })
-
     return result || null
-  }
+    }
+    //TOFIX:
+    throw new Error(`Cannot find user with email: ${email}`)
 
+  }
+   //TOFIX:
+   //VALIDADOR SE EXISTE O ID RECEBIDO.
   async findById(id: string): Promise<User | null> {
     const result = await prisma.user.findFirst({
       where: {

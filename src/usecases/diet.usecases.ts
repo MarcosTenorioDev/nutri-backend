@@ -11,7 +11,8 @@ class DietUseCase{
         this.dietRepository = new DietRepositoryPrisma();
         this.userRepository = new UserRepositoryPrisma();
     }
-
+//TOFIX:
+//trocar userEmail por userId
     async create({dietName ,prompt, userEmail}: DietCreate){
 
         const user = await this.userRepository.findByEmail(userEmail)
