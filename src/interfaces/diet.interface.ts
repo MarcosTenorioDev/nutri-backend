@@ -8,7 +8,7 @@ export interface Diet {
 export interface DietCreate{
 dietName: string
 prompt: any,
-userEmail: string
+userId: string
 }
 
 export interface DietCreateRepository{

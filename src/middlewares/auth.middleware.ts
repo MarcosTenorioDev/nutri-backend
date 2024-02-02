@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import jwksClient from 'jwks-rsa';
 
-export async function jwtValidator (req: any, reply: any) {
+export async function  jwtValidator (req: any, reply: any) {
     try {
 
         const token = req.headers['authorization'];
@@ -23,15 +23,20 @@ export async function jwtValidator (req: any, reply: any) {
           });
         };    
   
-        const decodedToken = await new Promise((resolve, reject) => {
-          jwt.verify(token, getKey, { algorithms: ['RS256'] }, (err, decoded) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(decoded);
-            }
-          });
-        });
+        const decodedToken: any = await new Promise((resolve, reject) => {
+      jwt.verify(token, getKey, { algorithms: ['RS256'] }, (err, decoded) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(decoded);
+        }
+      });
+    });
+
+    const userId = decodedToken.sub;
+    req.userId = userId;
+
+    return;
   
       } catch (error: any) {
         console.error('JWT Verification Error:', error.message);

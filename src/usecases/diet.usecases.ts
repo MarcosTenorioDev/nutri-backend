@@ -11,11 +11,9 @@ class DietUseCase{
         this.dietRepository = new DietRepositoryPrisma();
         this.userRepository = new UserRepositoryPrisma();
     }
-//TOFIX:
-//trocar userEmail por userId
-    async create({dietName ,prompt, userEmail}: DietCreate){
+    async create({dietName ,prompt, userId}: DietCreate){
 
-        const user = await this.userRepository.findByEmail(userEmail)
+        const user = await this.userRepository.findById(userId)
 
         if(!user) {
             throw new Error('User not found')
@@ -25,7 +23,7 @@ class DietUseCase{
         const dietData = await this.dietRepository.create({
             dietName: dietName,
             prompt : prompt,
-            userEmail
+            userId
         })
         
         const result = await prisma.diets.create({
