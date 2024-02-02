@@ -37,6 +37,25 @@ class DietUseCase{
         return result
 
     }
+
+    async delete(id: string, userId: string){
+        //fazer validação para saber se realmente é o usuário que está deletando uma dieta própria
+
+        const user = await this.userRepository.findById(userId)
+
+        if(!user) {
+            throw new Error('User not found')
+        }
+
+        const result = await prisma.diets.delete({
+            where : {
+                id : id
+            }
+        })
+
+        //personalizar retorno no postman para retonar http 200 
+        return result
+    }
 }
 
 export {DietUseCase}

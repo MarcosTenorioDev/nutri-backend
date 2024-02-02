@@ -23,4 +23,15 @@ export async function dietRoutes(fastify: FastifyInstance) {
       reply.send(error);
     }
   });
+
+  fastify.delete("/:id", async (req: any, reply: any) => {
+    const dietId = req.params.id;
+    
+    try {
+      const data = await dietUseCase.delete(dietId, req.userId);
+      return reply.send(data);
+    } catch (error) {
+      reply.send(error);
+    }
+  })
 }
