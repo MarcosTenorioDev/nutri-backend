@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { DietCreate, DietRepository } from "../interfaces/diet.interface";
+import { prisma } from '../database/prisma-client';
 
 class DietRepositoryPrisma implements DietRepository {
     async create(data: DietCreate): Promise<any> {

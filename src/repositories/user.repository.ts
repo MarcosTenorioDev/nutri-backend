@@ -60,6 +60,22 @@ class UserRepositoryPrisma implements UserRepository {
 
     return result || null
   }
+
+  async checkIfUserPaid(id: string): Promise<boolean>{
+
+    const user = await prisma.user.findFirst({
+        where:{
+            id: id,
+            isPaid: true
+        }
+    })
+
+    if(user){
+        return true
+    }
+
+    return false
+}
 }
 
 export { UserRepositoryPrisma };

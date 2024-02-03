@@ -123,8 +123,9 @@ export async function userRoutes(fastify : FastifyInstance){
       message: "Webhook received",
     });
   });
-
+  
   fastify.post('/setIsPaid', async (req : any, reply : any) => {
+    fastify.addHook("preHandler", jwtValidator)
     const userId = req.userId;
     try{
       const data = userUseCase.setUserPaid(userId)

@@ -20,12 +20,21 @@ class DietUseCase{
         }
 
 
+        const verifyIsPaid = await this.userRepository.checkIfUserPaid(userId)
+
+        if(!verifyIsPaid){
+            throw new Error(`user ${user.name} does not have access to paid features.`)
+        }
+
+        //mover nome para createDietResult
         const dietData = await this.dietRepository.create({
             dietName: dietName,
             prompt : prompt,
             userId
         })
-        
+
+
+        //mover create para o userRepository e mudar o nome para createDietInDatabase
         const result = await prisma.diets.create({
             data:{
                 name: dietName,
@@ -38,6 +47,8 @@ class DietUseCase{
 
     }
 
+
+    //mover prisma.diets.delete para o userRepository
     async delete(id: string, userId: string){
         //fazer validação para saber se realmente é o usuário que está deletando uma dieta própria
 
