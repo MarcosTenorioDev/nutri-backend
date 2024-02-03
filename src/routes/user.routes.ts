@@ -6,7 +6,6 @@ import { jwtValidator } from "../middlewares/auth.middleware";
 
 export async function userRoutes(fastify : FastifyInstance){
     const userUseCase = new UserUseCase();
-    fastify.addHook("preHandler", jwtValidator);
 
     fastify.get('/', (req, reply) => {
         reply.send({status: 'its ok'})
