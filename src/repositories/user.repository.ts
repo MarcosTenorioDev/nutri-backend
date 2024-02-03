@@ -47,6 +47,19 @@ class UserRepositoryPrisma implements UserRepository {
     
     return result || null
   }
+
+  async setUserPaid(id: string): Promise<User | null>{
+    const result = await prisma.user.update({
+      where:{
+        id
+      },
+      data: {
+        isPaid: true
+      }
+    })
+
+    return result || null
+  }
 }
 
 export { UserRepositoryPrisma };

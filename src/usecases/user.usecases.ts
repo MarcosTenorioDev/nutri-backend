@@ -18,13 +18,28 @@ class UserUseCase {
     const verifyIfUserExists = await this.userRepository.findById(id);
 
     if(!verifyIfUserExists){
-      console.log(id)
       throw new Error("User don't exists")
     }
 
     const result = await this.userRepository.delete(id);
 
     return result
+
+  }
+
+  //implementar a lógica de segurança de um token mestre para apenas o stripe poder fazer a requisição
+  async setUserPaid(id: string,) {
+    const verifyIfUserExists = await this.userRepository.findById(id);
+
+    if(!verifyIfUserExists){
+      throw new Error("User don't exists")
+    }
+
+
+    const result = await this.userRepository.setUserPaid(id);
+
+    return result
+
 
   }
 

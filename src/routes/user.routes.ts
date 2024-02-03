@@ -2,9 +2,11 @@ import { FastifyInstance } from "fastify";
 import { UserUseCase } from "../usecases/user.usecases";
 import { UserCreate } from "../interfaces/user.interface";
 import { Webhook } from "svix";
+import { jwtValidator } from "../middlewares/auth.middleware";
 
 export async function userRoutes(fastify : FastifyInstance){
     const userUseCase = new UserUseCase();
+    fastify.addHook("preHandler", jwtValidator);
 
     fastify.get('/', (req, reply) => {
         reply.send({status: 'its ok'})
@@ -122,4 +124,16 @@ export async function userRoutes(fastify : FastifyInstance){
       message: "Webhook received",
     });
   });
+
+  fastify.post('/setIsPaid', async (req : any, reply : any) => {
+    const userId = req.userId;
+    try{
+      const data = userUseCase.setUserPaid(userId)
+      return reply.send(data);
+    }
+    catch (error) {
+      reply.send(error);
+    }
+
+  })
 }

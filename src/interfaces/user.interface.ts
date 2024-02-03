@@ -15,4 +15,5 @@ export interface UserRepository{
     delete(id:string): any;
     findByEmail(email: string): Promise<User | null>;
     findById(id: string): Promise<User | null>;
+    setUserPaid(id: string) : Promise<User | null>;
 }
