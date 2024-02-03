@@ -1,10 +1,15 @@
+import { DietRepository } from "../interfaces/diet.interface";
 import { UserCreate, UserRepository, User } from "../interfaces/user.interface";
+import { DietRepositoryPrisma } from "../repositories/diet.repository";
 import { UserRepositoryPrisma } from "../repositories/user.repository";
 
 class UserUseCase {
   private userRepository: UserRepository;
+  private dietsRepository : DietRepository;
+
   constructor() {
     this.userRepository = new UserRepositoryPrisma();
+    this.dietsRepository = new DietRepositoryPrisma();
   }
 
   async create({ name, email, id}: UserCreate): Promise<User> {
@@ -19,6 +24,12 @@ class UserUseCase {
 
     if(!verifyIfUserExists){
       throw new Error("User don't exists")
+    }
+
+    const verifyIfUserHasDiets = await this.dietsRepository.verifyIfUserHasDiets(id)
+
+    if (verifyIfUserHasDiets){
+      await this.dietsRepository.deleteAllDietsByUserId(id)
     }
 
     const result = await this.userRepository.delete(id);

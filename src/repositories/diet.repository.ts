@@ -33,6 +33,35 @@ class DietRepositoryPrisma implements DietRepository {
 
     }
     }
+
+    async deleteAllDietsByUserId(userId: string) : Promise<any>{   
+
+        const diets = await prisma.diets.deleteMany({
+            where:{
+                userId: userId
+            }
+        })
+
+        return diets
+        
+    }
+
+    async verifyIfUserHasDiets(userId : string) : Promise<boolean>{
+
+        const hasDiets = await prisma.diets.findMany({
+            where:{
+                userId : userId
+            }
+        })
+
+        if(hasDiets){
+            return true
+        }
+        
+        return false
+
+    }
+    
 }
 
 export { DietRepositoryPrisma };

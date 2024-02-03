@@ -19,4 +19,6 @@ export interface DietCreateRepository{
 
 export interface DietRepository{
  create(data: DietCreate) : Promise<string>
+ deleteAllDietsByUserId(userId: string) : Promise<any>;
+ verifyIfUserHasDiets(userId : string) : Promise<boolean>;
 }

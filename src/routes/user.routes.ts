@@ -77,6 +77,7 @@ export async function userRoutes(fastify : FastifyInstance){
         break;
 
       case 'user.created':
+        console.log('user created')
         try{
             const data = userUseCase.create({
                 id : id,
@@ -123,9 +124,10 @@ export async function userRoutes(fastify : FastifyInstance){
       message: "Webhook received",
     });
   });
-  
+
+  /* fastify.addHook("preHandler", jwtValidator) */
+  /* Adicionar alguma lógica para ser usada no stripe para validar a requisição */
   fastify.post('/setIsPaid', async (req : any, reply : any) => {
-    fastify.addHook("preHandler", jwtValidator)
     const userId = req.userId;
     try{
       const data = userUseCase.setUserPaid(userId)

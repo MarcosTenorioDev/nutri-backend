@@ -67,6 +67,18 @@ class DietUseCase{
         //personalizar retorno no postman para retonar http 200 
         return result
     }
+
+    async deleteAllDietsByUserId(userId: string){
+        const checkIfUserHasDiets  = await this.dietRepository.verifyIfUserHasDiets(userId);
+
+        if(!checkIfUserHasDiets){
+            throw new Error("User don't have any diet registred")
+        }
+
+        const result = await this.dietRepository.deleteAllDietsByUserId(userId);
+
+        return result
+    }
 }
 
 export {DietUseCase}
