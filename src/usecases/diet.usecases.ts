@@ -51,12 +51,15 @@ class DietUseCase{
     //mover prisma.diets.delete para o userRepository
     async delete(id: string, userId: string){
         //fazer validação para saber se realmente é o usuário que está deletando uma dieta própria
+        //verificar se a dieta contém o userId utilizado na requisição
 
         const user = await this.userRepository.findById(userId)
 
         if(!user) {
             throw new Error('User not found')
-        }
+        }  
+
+        //verificar se o id da dieta existe
 
         const result = await prisma.diets.delete({
             where : {
