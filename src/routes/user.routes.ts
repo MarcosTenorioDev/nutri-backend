@@ -6,6 +6,7 @@ import { jwtValidator } from "../middlewares/auth.middleware";
 
 export async function userRoutes(fastify : FastifyInstance){
     const userUseCase = new UserUseCase();
+    
 
     fastify.get('/', (req, reply) => {
         reply.send({status: 'its ok'})
@@ -137,5 +138,16 @@ export async function userRoutes(fastify : FastifyInstance){
       reply.send(error);
     }
 
+  })
+
+  fastify.get('/userStatus', async (req: any, reply: any) => {
+    const userId = req.userId;
+
+      try{
+        const result = await userUseCase.verifyUserStatus(userId)
+        reply.send(result);
+      }catch(err){
+        return reply.send(err)
+      }
   })
 }

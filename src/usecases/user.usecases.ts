@@ -55,6 +55,15 @@ class UserUseCase {
   }
 
 
+  async verifyUserStatus(id: string){
+    const result = await this.userRepository.checkIfUserPaid(id);
+
+    return {
+      isPaid: result
+    }
+  }
+
+
 }
 
 export { UserUseCase };
