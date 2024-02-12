@@ -1,6 +1,6 @@
 import { Diets, PrismaPromise } from "@prisma/client";
 import { prisma } from "../database/prisma-client";
-import { DietCreate, DietRepository } from "../interfaces/diet.interface";
+import { Diet, DietCreate, DietRepository } from "../interfaces/diet.interface";
 import { DietRepositoryPrisma } from "../repositories/diet.repository";
 import { UserRepositoryPrisma } from "../repositories/user.repository";
 
@@ -79,6 +79,19 @@ class DietUseCase implements DietUseCase{
         const result = await this.dietRepository.deleteAllDietsByUserId(userId);
 
         return result
+    }
+
+    async getAllDietsByUserId(userId : string): Promise<Diet[]>{
+
+        const user = await this.userRepository.findById(userId)
+
+        if(!user) {
+            throw new Error('User not found')
+        }  
+        
+        const diets = await this.dietRepository.getAllDietsByUserId(userId)
+    
+        return diets
     }
 }
 

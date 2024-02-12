@@ -26,12 +26,24 @@ export async function dietRoutes(fastify: FastifyInstance) {
 
   fastify.delete("/:id", async (req: any, reply: any) => {
     const dietId = req.params.id;
+    const userId = req.userId
     
     try {
-      const data = await dietUseCase.delete(dietId, req.userId);
+      const data = await dietUseCase.delete(dietId, userId);
       return reply.send(data);
     } catch (error) {
       reply.send(error);
+    }
+  })
+
+  fastify.get("/allDiets", async (req : any, reply : any) => {
+    const userId = req.userId;
+
+    try{
+      const data = await dietUseCase.getAllDietsByUserId(userId)
+      return reply.send(data)
+    }catch(error){
+      reply.send(error)
     }
   })
 }

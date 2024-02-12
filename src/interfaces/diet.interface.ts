@@ -20,10 +20,12 @@ export interface DietRepository{
 createDietResult(data: DietCreateRepository) : Promise<string>
  deleteAllDietsByUserId(userId: string) : Promise<any>;
  verifyIfUserHasDiets(userId : string) : Promise<boolean>;
+ getAllDietsByUserId(userId: string) :Promise<Diet[]>
 }
 
 export interface DietUseCase {
   create({dietName ,prompt, userId}: DietCreate): Promise<any>;
   delete(id: string, userId: string): Promise<any>;
   deleteAllDietsByUserId(userId: string): Promise<any>;
+  getAllDietsByUserId(userId: string): Promise<Diet[]>; 
 }

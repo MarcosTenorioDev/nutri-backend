@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { DietCreate, DietCreateRepository, DietRepository } from "../interfaces/diet.interface";
+import { Diet, DietCreate, DietCreateRepository, DietRepository } from "../interfaces/diet.interface";
 import { prisma } from '../database/prisma-client';
 
 class DietRepositoryPrisma implements DietRepository {
@@ -60,6 +60,17 @@ class DietRepositoryPrisma implements DietRepository {
         
         return false
 
+    }
+
+    async getAllDietsByUserId(userId : string): Promise<Diet[]>{
+
+       const diets = await prisma.diets.findMany({
+        where:{
+            userId : userId
+        }
+       })
+
+       return diets
     }
     
 }
