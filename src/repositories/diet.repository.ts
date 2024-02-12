@@ -1,9 +1,9 @@
 import axios, { AxiosError } from 'axios';
-import { DietCreate, DietRepository } from "../interfaces/diet.interface";
+import { DietCreate, DietCreateRepository, DietRepository } from "../interfaces/diet.interface";
 import { prisma } from '../database/prisma-client';
 
 class DietRepositoryPrisma implements DietRepository {
-    async create(data: DietCreate): Promise<any> {
+    async createDietResult(data: DietCreateRepository): Promise<any> {
         const OPENAI_API_KEY = process.env.OPENAI_API_KEY
         const content = data.prompt;
         const config = {
@@ -21,7 +21,7 @@ class DietRepositoryPrisma implements DietRepository {
             ],
         };
 
-        try {
+        try {            
             const response = await axios.post("https://api.openai.com/v1/chat/completions", chatData, config);
             const dietResponse = response.data.choices[0].message.content;
 

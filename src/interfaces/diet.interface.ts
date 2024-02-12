@@ -12,13 +12,18 @@ userId: string
 }
 
 export interface DietCreateRepository{
-  name: string;
-  dietData: string;
+  prompt: string;
   userId: string
 }
 
 export interface DietRepository{
- create(data: DietCreate) : Promise<string>
+createDietResult(data: DietCreateRepository) : Promise<string>
  deleteAllDietsByUserId(userId: string) : Promise<any>;
  verifyIfUserHasDiets(userId : string) : Promise<boolean>;
+}
+
+export interface DietUseCase {
+  create({dietName ,prompt, userId}: DietCreate): Promise<any>;
+  delete(id: string, userId: string): Promise<any>;
+  deleteAllDietsByUserId(userId: string): Promise<any>;
 }

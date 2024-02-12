@@ -1,10 +1,11 @@
+import { Diets, PrismaPromise } from "@prisma/client";
 import { prisma } from "../database/prisma-client";
 import { DietCreate, DietRepository } from "../interfaces/diet.interface";
 import { DietRepositoryPrisma } from "../repositories/diet.repository";
 import { UserRepositoryPrisma } from "../repositories/user.repository";
 
 
-class DietUseCase{
+class DietUseCase implements DietUseCase{
     private dietRepository : DietRepository
     private userRepository: UserRepositoryPrisma;
     constructor(){
@@ -22,27 +23,24 @@ class DietUseCase{
 
         const verifyIsPaid = await this.userRepository.checkIfUserPaid(userId)
 
+
         if(!verifyIsPaid){
             throw new Error(`user ${user.name} does not have access to paid features.`)
         }
 
-        //mover nome para createDietResult
-        const dietData = await this.dietRepository.create({
-            dietName: dietName,
+        const dietData = await this.dietRepository.createDietResult({
             prompt : prompt,
             userId
         })
 
-
         //mover create para o userRepository e mudar o nome para createDietInDatabase
-        const result = await prisma.diets.create({
+        const result: any = await prisma.diets.create({
             data:{
                 name: dietName,
                 dietData : dietData,
                 userId: user.id
             }
         })
-
         return result
 
     }
