@@ -52,7 +52,7 @@ export async function webhookClerk(fastify : FastifyInstance){
         }
       
         // Grab the ID and TYPE of the Webhook
-        const { id , external_accounts, first_name  } = evt.data;
+        const { id , email_addresses, first_name  } = evt.data;
         const { type, data } = evt;
     
         //TODO:
@@ -71,16 +71,16 @@ export async function webhookClerk(fastify : FastifyInstance){
     
           case 'user.created':
             console.log('user created')
-            try{
+            try{  
                 const data = userUseCase.create({
                     id : id,
                     name : first_name,
-                    email : external_accounts[0].email_address 
+                    email : email_addresses[0].email_address
                 });
                 return reply.send(data)
             } catch(error){
                 reply.send(error)
-            }
+            } 
             break;
     
           case 'user.updated':
@@ -102,6 +102,11 @@ export async function webhookClerk(fastify : FastifyInstance){
             console.log('Sessão revogada');
             console.log('Webhook body:', data);
             break;
+
+          case 'email.created':
+          console.log('Email Criado');
+          console.log('Webhook body:', data);
+          break;
       
           case 'session.removed':
             console.log('Sessão removida');
