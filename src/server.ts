@@ -23,6 +23,7 @@ app.register(dietRoutes, {
 
 app.listen({
     port: Number(process.env.PORT) || 3000,
+    host: '0.0.0.0'
 }, () => {
     const port = Number(process.env.PORT) || 3000
     console.log(`server is running on port ${port}`)
