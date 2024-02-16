@@ -19,7 +19,7 @@
   "devDependencies": {
     "@fastify/cors": "^8.0.0",
     "@types/node": "^20.11.10",
-    "jsonwebtoken": "^9.0.2",
+    "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^3.1.0",
     "prisma": "^5.9.1",
     "tsx": "^4.7.0",
@@ -30,7 +30,6 @@
     "axios": "^1.6.5",
     "fastify": "^4.25.2",
     "svix": "^1.16.0",
-    "jsonwebtoken": "^9.0.2",
-    "prisma": "^5.9.1"
+    "jsonwebtoken": "^8.5.1"
   }
 }
