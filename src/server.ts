@@ -3,14 +3,23 @@ import {userRoutes} from './routes/user.routes'
 import { dietRoutes } from './routes/diet.routes'
 import cors from "@fastify/cors";
 import { webhookClerk } from "./routes/clerkWebhook.routes";
+import { stripeRoutes } from "./routes/stripe.routes";
+import fastifyRawBody from "fastify-raw-body";
 
 
 const app: FastifyInstance = fastify();
 //configurar cors corretamente posteriormente
 app.register(cors)
+app.register(fastifyRawBody,{
+    field: 'rawBody',
+})
 
 app.register(userRoutes, {
     prefix: '/users'
+})
+
+app.register(stripeRoutes, {
+    prefix: '/stripe',
 })
 
 app.register(webhookClerk, {
