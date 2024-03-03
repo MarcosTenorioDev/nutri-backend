@@ -63,6 +63,14 @@ class UserUseCase {
     }
   }
 
+  async verifyUserEmail(id: string){
+    const result = await this.userRepository.checkUserEmail(id);
+
+    return {
+      email: result
+    }
+  }
+
 
 }
 

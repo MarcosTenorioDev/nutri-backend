@@ -76,6 +76,21 @@ class UserRepositoryPrisma implements UserRepository {
 
     return false
 }
+
+async checkUserEmail(id: string): Promise<string>{
+
+  const user = await prisma.user.findFirst({
+    where: {
+      id
+    }
+  })
+
+  if(user){
+      return user.email
+  }
+
+  return ''
+}
 }
 
 export { UserRepositoryPrisma };

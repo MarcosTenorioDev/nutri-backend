@@ -33,4 +33,15 @@ export async function userRoutes(fastify : FastifyInstance){
         return reply.send(err)
       }
   })
+
+  fastify.get('/userEmail', async (req: any, reply: any) => {
+    const userId = req.userId;
+
+      try{
+        const result = await userUseCase.verifyUserStatus(userId)
+        reply.send(result);
+      }catch(err){
+        return reply.send(err)
+      }
+  })
 }

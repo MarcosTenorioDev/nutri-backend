@@ -17,4 +17,5 @@ export interface UserRepository{
     findById(id: string): Promise<User | null>;
     setUserPaid(id: string) : Promise<User | null>;
     checkIfUserPaid(id: string) : Promise<boolean>
+    checkUserEmail(id: string) : Promise<string>;
 }
