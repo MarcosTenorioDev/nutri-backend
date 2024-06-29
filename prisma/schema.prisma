@@ -16,7 +16,7 @@ model User{
   email String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  isPaid Boolean @default(false)
+  isPaid Boolean @default(true)
   diets Diets[]
 
   @@map("users")
