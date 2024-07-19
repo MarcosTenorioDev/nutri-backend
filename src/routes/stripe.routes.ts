@@ -14,8 +14,8 @@ export async function stripeRoutes(fastify: FastifyInstance) {
     console.log("entrou aqui");
 
     //mudar para produção ao colocar o backend no ar
-    const endpointSecret = 'whsec_FHcPrWH0yTzerWc5fbpd2DMKvXIjV43X'
-    const stripe = new Stripe('sk_test_51OYF2NBye4v8jfuLESDQbLTrxvwYi0IZRTZp2YbijdOKQnYYYjEzA3WzO5XqUtfH4tbI3ObmiMYRThBpuIf0kyc000jNUnuc8Y')
+    const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
     const sig = req.headers['stripe-signature'];
 
     let event;
@@ -24,7 +24,7 @@ export async function stripeRoutes(fastify: FastifyInstance) {
 
 
   try {
-    event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret!);
   } catch (err : any) {
     res.status(400).send(`Webhook Error: ${err.message}`);
     return;
